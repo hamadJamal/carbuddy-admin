@@ -1,0 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;1,500&display=swap");
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto";
+}
+
+.ComplaintsRow {
+  flex-direction: row;
+}
+.links {
+  text-decoration: none;
+}
+#DecideCharges {
+  margin-left: 10px;
+  margin-right: 40px;
+}
