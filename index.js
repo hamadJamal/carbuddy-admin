@@ -6,6 +6,7 @@ const cors = require("cors");
 require("dotenv/config");
 const postsRoute = require("./routes/posts");
 const complaintsRoute = require("./routes/complaints");
+const accountsRoute = require("./routes/accounts");
 const DB = process.env.DB_CONNECTION;
 const corsOptions = {
   origin: "*",
@@ -22,6 +23,7 @@ app.use(
 );
 app.use("/charges", postsRoute);
 app.use("/complaints", complaintsRoute);
+app.use("/accounts", accountsRoute);
 
 app.get("/", (req, res) => {
   res.send("Hello User");
