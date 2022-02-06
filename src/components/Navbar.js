@@ -1,52 +1,38 @@
-import React, { useState } from "react";
+import React from "react";
+import { IconContext } from "react-icons";
+import HeaderText from "./NavTopText/NavTopText";
 import { Link } from "react-router-dom";
-import * as FaIcons from "react-icons/fa";
-import * as AiIcons from "react-icons/ai";
 import { SidebarData } from "./SidebarData";
 import "./Navbar.css";
-import { IconContext } from "react-icons";
-
-function Navbar() {
-  const [sidebar, setSidebar] = useState(true);
-  const showSidebar = () => setSidebar(sidebar); //set to !sidebar to toggle
+export default function SideNavbar(props) {
   return (
-    <>
-      <IconContext.Provider value={{ color: "#ffff" }}>
-        <div className="navbar">
-          <Link to="#" className="menu-bars">
-            <FaIcons.FaBars onClick={showSidebar} />
-          </Link>
-        </div>
-        <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
-          <ul className="nav-menu-items" onClick={showSidebar}>
-            <li className="navbar-toggle">
-              <Link to="#" className="menu-bars">
-                <AiIcons.AiFillCar />
+    <IconContext.Provider value={{ color: "#ffff" }}>
+      <nav className={"nav-menu"}>
+        <ul>
+          <HeaderText />
+        </ul>
+        <br />
+        {SidebarData.map((item, index) => {
+          return (
+            <span key={index} className={item.cName}>
+              <Link to={item.path}>
                 <span
                   style={{
-                    fontFamily: "cursive",
-                    fontSize: 28,
+                    marginLeft: 20,
+                    marginRight: 16,
                   }}
                 >
-                  CarBuddy
+                  {item.icon}
+                </span>
+                <span style={{ marginTop: 80, marginRight: 10 }}>
+                  {item.title}
                 </span>
               </Link>
-            </li>
-            {SidebarData.map((item, index) => {
-              return (
-                <li key={index} className={item.cName}>
-                  <Link to={item.path}>
-                    {item.icon}
-                    <span>{item.title}</span>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
-      </IconContext.Provider>
-    </>
+            </span>
+          );
+        })}
+        {/* <ChatOnNavbar /> */}
+      </nav>
+    </IconContext.Provider>
   );
 }
-
-export default Navbar;

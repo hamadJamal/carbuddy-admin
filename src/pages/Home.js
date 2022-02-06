@@ -13,7 +13,9 @@ import { Form } from "react-bootstrap";
 import { FloatingLabel } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { data } from "jquery";
-
+import TopNavbar from "../components/TopNavbar/TopNavBar";
+import Graph from "../components/graph/graph";
+import Feed from "../components/Feed/Feed";
 function Home() {
   const [charges, setCharges] = useState("");
   const [Currentcharges, setCurrentcharges] = useState({});
@@ -66,120 +68,140 @@ function Home() {
 
   return (
     <div className="Home">
-      <Card
-        className="shadow p-3 mb-5 bg-white rounded"
-        style={{
-          width: "31rem",
-          marginInlineStart: "300px",
-          marginTop: "20px",
-          borderRadius: "10px",
-        }}
-      >
-        <Card.Body>
-          <Card.Title>CHARGES</Card.Title>
-          <br />
+      <TopNavbar name="Home" />
 
-          <Card.Text>
-            The charges are currently set to {Currentcharges.Currency}{" "}
-            {Currentcharges.Price} per {Currentcharges.Distance} per{" "}
-            {Currentcharges.Time}.
-            {!adjustCharges ? (
-              <Card.Link onClick={() => setAdjustCharges(true)}>
-                {" "}
-                Edit
-              </Card.Link>
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        <div>
+          <Card
+            className="shadow p-3 mb-5 bg-white rounded"
+            style={{
+              width: "38rem",
+              marginInlineStart: "265px",
+              marginTop: "50px",
+              marginBottom: "100px",
+              borderRadius: "10px",
+            }}
+          >
+            <Card.Body>
+              <Card.Title>CHARGES</Card.Title>
+              <br />
+
+              <Card.Text>
+                The charges are currently set to {Currentcharges.Currency}{" "}
+                {Currentcharges.Price} per {Currentcharges.Distance} per{" "}
+                {Currentcharges.Time}.
+                {!adjustCharges ? (
+                  <Card.Link onClick={() => setAdjustCharges(true)}>
+                    {" "}
+                    Edit
+                  </Card.Link>
+                ) : (
+                  ""
+                )}
+              </Card.Text>
+            </Card.Body>
+            {adjustCharges ? (
+              <div id="DecideCharges">
+                <>
+                  <FloatingLabel
+                    controlId="floatingInput"
+                    label="Price"
+                    className="smaller-input mb-2"
+                    size="lg"
+                  >
+                    <Form.Control
+                      size="lg"
+                      placeholder="Price"
+                      onChange={(e) => {
+                        setCharges(e.target.value);
+                      }}
+                    />
+                  </FloatingLabel>
+                  <FloatingLabel
+                    controlId="floatingSelect"
+                    label="Currency"
+                    className="mb-2"
+                  >
+                    <Form.Select
+                      aria-label="Floating label select example"
+                      onChange={(e) => {
+                        setCurrency(e.target.value);
+                        console.log(e.target.value);
+                      }}
+                    >
+                      <option value=""></option>
+                      <option value="PKR">PKR</option>
+                      <option value="USD">USD</option>
+                      <option value="RMB">RMB</option>
+                      <option value="EUR">EUR</option>
+                    </Form.Select>
+                  </FloatingLabel>
+                  <FloatingLabel
+                    controlId="floatingSelect"
+                    label="Distance"
+                    className="mb-2"
+                  >
+                    <Form.Select
+                      aria-label="Floating label select example"
+                      onChange={(e) => setDistance(e.target.value)}
+                    >
+                      <option value=""></option>
+                      <option value="Kilometer">Kilometer</option>
+                      <option value="Mile">Mile</option>
+                      <option value="Feet">Feet</option>
+                    </Form.Select>
+                  </FloatingLabel>
+                  <FloatingLabel
+                    controlId="floatingSelect"
+                    label="Time"
+                    className="mb-3"
+                  >
+                    <Form.Select
+                      aria-label="Floating label select example"
+                      onChange={(e) => setTime(e.target.value)}
+                    >
+                      <option value=""></option>
+                      <option value="Hour">Hour</option>
+                      <option value="Minute">Minute</option>
+                      <option value="Second">Second</option>
+                    </Form.Select>
+                  </FloatingLabel>
+
+                  <Button
+                    variant="primary"
+                    disabled={isLoading}
+                    onClick={!isLoading ? handleClick : null}
+                  >
+                    {isLoading ? "Saving…" : "Save"}
+                  </Button>
+                  <Button
+                    variant="light"
+                    style={{ marginLeft: 6 }}
+                    onClick={() => setAdjustCharges(false)}
+                  >
+                    Cancel
+                  </Button>
+                </>
+              </div>
             ) : (
-              ""
+              <></>
             )}
-          </Card.Text>
-        </Card.Body>
-        {adjustCharges ? (
-          <div id="DecideCharges">
-            <>
-              <FloatingLabel
-                controlId="floatingInput"
-                label="Price"
-                className="smaller-input mb-2"
-                size="lg"
-              >
-                <Form.Control
-                  size="lg"
-                  placeholder="Price"
-                  onChange={(e) => {
-                    setCharges(e.target.value);
-                  }}
-                />
-              </FloatingLabel>
-              <FloatingLabel
-                controlId="floatingSelect"
-                label="Currency"
-                className="mb-2"
-              >
-                <Form.Select
-                  aria-label="Floating label select example"
-                  onChange={(e) => {
-                    setCurrency(e.target.value);
-                    console.log(e.target.value);
-                  }}
-                >
-                  <option value=""></option>
-                  <option value="PKR">PKR</option>
-                  <option value="USD">USD</option>
-                  <option value="RMB">RMB</option>
-                  <option value="EUR">EUR</option>
-                </Form.Select>
-              </FloatingLabel>
-              <FloatingLabel
-                controlId="floatingSelect"
-                label="Distance"
-                className="mb-2"
-              >
-                <Form.Select
-                  aria-label="Floating label select example"
-                  onChange={(e) => setDistance(e.target.value)}
-                >
-                  <option value=""></option>
-                  <option value="Kilometer">Kilometer</option>
-                  <option value="Mile">Mile</option>
-                  <option value="Feet">Feet</option>
-                </Form.Select>
-              </FloatingLabel>
-              <FloatingLabel
-                controlId="floatingSelect"
-                label="Time"
-                className="mb-3"
-              >
-                <Form.Select
-                  aria-label="Floating label select example"
-                  onChange={(e) => setTime(e.target.value)}
-                >
-                  <option value=""></option>
-                  <option value="Hour">Hour</option>
-                  <option value="Minute">Minute</option>
-                  <option value="Second">Second</option>
-                </Form.Select>
-              </FloatingLabel>
+          </Card>
 
-              <Button
-                variant="primary"
-                disabled={isLoading}
-                onClick={!isLoading ? handleClick : null}
-              >
-                {isLoading ? "Saving…" : "Save"}
-              </Button>
-              <Button
-                variant="light"
-                style={{ marginLeft: 6 }}
-                onClick={() => setAdjustCharges(false)}
-              >
-                Cancel
-              </Button>
-            </>
+          <div style={{ marginLeft: 265, marginTop: 40 }}>
+            <Graph />
           </div>
-        ) : (
-          <></>
-        )}
-      </Card>
+        </div>
+
+        <div
+          style={{
+            marginInlineStart: 38,
+            marginTop: 50,
+          }}
+        >
+          <Feed />
+        </div>
+      </div>
     </div>
   );
 }

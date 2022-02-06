@@ -1,10 +1,8 @@
 import React from "react";
 import { Col, Row } from "antd";
-import CCard from "../components/ComplaintCard";
+import CCard from "../components/AccountCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import TopNavBar from "../components/TopNavbar/TopNavBar";
-
 function Complaints() {
   const [complaints, setComplaints] = useState([]);
 
@@ -15,8 +13,6 @@ function Complaints() {
   }, []);
   return (
     <>
-      <TopNavBar name="Complaints" />
-
       <Row
         style={{
           marginInlineStart: 300,
@@ -29,7 +25,7 @@ function Complaints() {
               key={index}
               Complainant={CardContent.Complainant}
               Complainee={CardContent.Complainee}
-              Description={CardContent.Description}
+              //   Description={CardContent.Description}
               Image={CardContent.Image}
               _id={CardContent._id}
               setComplaints={setComplaints}
